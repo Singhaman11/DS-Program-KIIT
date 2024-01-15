@@ -1,11 +1,3 @@
-/*
-WAP to merge two single linked list.
-Input:
-    1st list: 2, 3, 4, 6, 7
-Input:
-    2nd list: 12, 15, 20, 45
-Output: 2, 12, 3, 15, 4, 20, 6, 45, 7,
-*/
 #include<stdio.h>
 #include<stdlib.h>
 struct Node
@@ -36,39 +28,39 @@ void createList(struct Node **head, int n)
         }
     }
 }
+
 void mergeList(struct Node **head, struct Node **head1, int g)
 {
-    struct Node *prev1 = NULL, *current1 = NULL, *current2 = NULL, *prev2 = NULL;
-    prev1 = *head;
-    current1 = *head;
-    prev2 = *head1;
-    current2 = *head1;
-    while(current1->next != NULL && current2->next != NULL)
+    struct Node *prev1 = *head, *current1 = *head;
+    struct Node *prev2 = *head1, *current2 = *head1;
+
+    while (current1 != NULL && current2 != NULL)
     {
-        current1 = current1 -> next;
+        prev1 = current1;
+        current1 = current1->next;
+
         prev2 = current2;
-        current2 = current2 -> next;
-        prev1 -> next = prev2;
-        prev1 = prev2;
-        prev1 -> next = current1;
-        prev1 = current1;
+        current2 = current2->next;
+
+        prev1->next = prev2;
+        prev2->next = current1;
     }
-    prev2 = current2;
-    prev1 -> next = prev2;
-    prev1 = prev1 -> next;
-    // printf("%d", g);
-    if(g == 1)
+
+    if (g == 1)
     {
-        current1 = current1 -> next;
-        prev1 -> next = current1;
-        prev1 = current1;
+        prev1->next = current2;
+    }
+    else if (g == 2)
+    {
+        prev1->next = prev2;
     }
 }
+
 void main()
 {
     int n = 0, n1 = 0, g = 0;
-    struct Node *head = (struct Node*) malloc(sizeof(struct Node));
-    struct Node *head1 = (struct Node*) malloc(sizeof(struct Node));
+    struct Node *head = NULL;
+    struct Node *head1 = NULL;
     struct Node *temp = NULL;
     printf("Enter the total number of nodes in list1: ");
     scanf("%d", &n);
